@@ -1,4 +1,5 @@
 package com.api_horizonte.api_horizonte.Infraestructure.Entities;
 
-public class Client {
+public enum UserActive {
+    ATIVO, BLOQUEADO
 }
