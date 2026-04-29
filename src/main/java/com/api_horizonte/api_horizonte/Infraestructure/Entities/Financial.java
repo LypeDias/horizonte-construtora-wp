@@ -20,8 +20,8 @@ public class Financial {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(name = "value", nullable = false)
-    private BigDecimal value;
+    @Column(name = "amount", nullable = false)
+    private BigDecimal amount;
 
     @Column(name = "maturity", nullable = false)
     private LocalDate maturity;

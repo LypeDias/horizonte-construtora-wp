@@ -34,8 +34,12 @@ public class RealState {
     @Column(name = "address", nullable = false)
     private String address;
 
-    @Column(name = "realStateStatus", nullable = false)
+    @Column(name = "buildStatus", nullable = false)
     private Double buildStatus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "RealStateStatus")
+    private RealStateStatus realsStateStatus;
 
     @Column(name = "dateStart", nullable = false)
     private LocalDate dateStart;

@@ -18,6 +18,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     boolean existsByEmailAndIdNot(String email, int id);
 
-    //@Transactional
-    //void deleteUserById(int id);
+    @Transactional
+    void deleteUserById(int id);
 }

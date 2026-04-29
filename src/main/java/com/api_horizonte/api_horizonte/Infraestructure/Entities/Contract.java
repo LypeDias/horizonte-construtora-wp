@@ -26,6 +26,7 @@ public class Contract {
     @Column(name = "purchaseValue", nullable = false)
     private BigDecimal purchaseValue;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "statusContract", nullable = false)
     private ContractStatus statusContract;
 
@@ -46,8 +47,4 @@ public class Contract {
 
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
-
-    public void created(){
-        this.createdAt = LocalDateTime.now();
-    }
 }

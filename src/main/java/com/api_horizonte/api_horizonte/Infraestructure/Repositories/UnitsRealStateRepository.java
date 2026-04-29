@@ -19,4 +19,17 @@ public interface UnitsRealStateRepository extends JpaRepository<UnitsRealState, 
 
     Optional<UnitsRealState> findUnitsRealStateByFloor(int floor);
 
+    boolean existsByRealStateAndFloorAndNumber(
+            RealState realState,
+            Integer floor,
+            Integer number
+    );
+
+    boolean existsByRealStateAndFloorAndNumberAndIdNot(
+            RealState realState,
+            Integer floor,
+            Integer number,
+            Integer id
+    );
+
 }

@@ -8,9 +8,13 @@ import com.api_horizonte.api_horizonte.Infraestructure.Entities.UserRole;
 import com.api_horizonte.api_horizonte.Infraestructure.Entities.User;
 import com.api_horizonte.api_horizonte.Infraestructure.Repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+@Service
 public class UserService {
 
     private final UserRepository userRepository;
@@ -21,9 +25,28 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public List<UserResponseDefault> findAllUsers(){
+        return userRepository.findAll()
+                .stream()
+                .map(user -> new UserResponseDefault(user.getCpf(), user.getName(), user.getEmail()))
+                .toList();
+    }
+
+    public UserResponseDefault findUserById(int id){
+        User user = userRepository.findUserById(id).orElseThrow(
+                () -> new RuntimeException("Id não encontrado")
+        );
+        return new UserResponseDefault(
+                user.getCpf(),
+                user.getName(),
+                user.getEmail()
+        );
+    }
+
     public UserResponseDefault findUserByName (String name){
         User user = userRepository.findUserByName(name).orElseThrow(
-                () -> new RuntimeException("Usuário não encontrado"));
+                () -> new RuntimeException("Usuário não encontrado")
+        );
 
         return new UserResponseDefault(
                 user.getCpf(),
@@ -98,16 +121,6 @@ public class UserService {
                 () -> new RuntimeException("Id customer is invalid")
         );
 
-        //validação de email
-        /*if(newUserRequest.email() != null) {
-            if(!newUserRequest.email().equals(user.getEmail())){
-                long totalEmails = userRepository.countByEmail(newUserRequest.email());
-                if (totalEmails >= 2) {
-                    throw new RuntimeException("Email já existe!!");
-                }
-            }
-        }*/
-
         if (newUserRequest.email() != null) {
             if (!newUserRequest.email().equals(user.getEmail())) {
 
@@ -146,8 +159,10 @@ public class UserService {
                 user.getName(),
                 user.getEmail()
         );
-
-
-
     }
+
+    public void deleteUserById(int id){
+        userRepository.deleteUserById(id);
+    }
+
 }
