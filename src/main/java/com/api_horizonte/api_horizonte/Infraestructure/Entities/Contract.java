@@ -47,4 +47,21 @@ public class Contract {
 
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
+
+    // campos adicionados na Contract:
+
+    @Column(name = "downPayment")
+    private BigDecimal downPayment; // Valor de entrada
+
+    @Column(name = "installmentsTotal", nullable = false)
+    private Integer installmentsTotal; // Total de parcelas (ex: 120)
+
+    @Column(name = "installmentValue", nullable = false)
+    private BigDecimal installmentValue; // Valor de cada parcela
+
+    @Column(name = "interestRate")
+    private BigDecimal interestRate; // Taxa de juros mensal (ex: 0.8%)
+
+    @Column(name = "contractNumber", nullable = false, unique = true)
+    private String contractNumber; // Ex: "HRZ-2024-00001"
 }

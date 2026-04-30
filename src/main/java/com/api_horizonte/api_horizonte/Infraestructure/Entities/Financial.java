@@ -46,4 +46,21 @@ public class Financial {
 
     @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
+
+    // Campos adicionados na Financial:
+
+    @Column(name = "installmentNumber", nullable = false)
+    private Integer installmentNumber; // Número da parcela (1, 2, 3...)
+
+    @Column(name = "paidAt")
+    private LocalDateTime paidAt; // Data/hora do pagamento efetivo
+
+    @Column(name = "fineAmount")
+    private BigDecimal fineAmount; // Multa por atraso
+
+    @Column(name = "interestAmount")
+    private BigDecimal interestAmount; // Juros por atraso
+
+    @Column(name = "totalAmount")
+    private BigDecimal totalAmount; // amount + multa + juros
 }

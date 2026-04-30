@@ -8,12 +8,11 @@ import com.api_horizonte.api_horizonte.Infraestructure.Entities.User;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public record ContractDTO(
-        LocalDate datePurchase,
-        BigDecimal purchaseValue,
-        ContractStatus statusContract,
-        User userCPF,
-        RealState realState,
-        UnitsRealState unitsRealState
-) {
-}
+public record ContractRequest(
+        String userCPF,
+        Integer realStateId,
+        Integer unitsRealStateId,
+        BigDecimal downPayment,
+        Integer installmentsTotal,
+        BigDecimal interestRate   // opcional, pode vir do imóvel
+) {}
