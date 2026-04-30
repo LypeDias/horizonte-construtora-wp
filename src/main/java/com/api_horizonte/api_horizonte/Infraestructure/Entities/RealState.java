@@ -39,7 +39,7 @@ public class RealState {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "RealStateStatus")
-    private RealStateStatus realsStateStatus;
+    private RealStateStatus realStateStatus;
 
     @Column(name = "dateStart", nullable = false)
     private LocalDate dateStart;
