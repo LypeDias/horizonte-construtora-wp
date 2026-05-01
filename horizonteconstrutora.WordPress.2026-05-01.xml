@@ -16,7 +16,11 @@
 <!-- 7. WordPress will then import each of the posts, pages, comments, categories, etc. -->
 <!--    contained in this file into your site. -->
 
+<<<<<<< HEAD
 	<!-- generator="WordPress/6.9.4" created="2026-05-01 01:08" -->
+=======
+	<!-- generator="WordPress/6.9.4" created="2026-05-01 01:13" -->
+>>>>>>> 2ea5872 (2.1.0 - Inserindo responsividade da tela de sobre para celulares)
 <rss version="2.0"
 	xmlns:excerpt="http://wordpress.org/export/1.2/excerpt/"
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -29,7 +33,11 @@
 	<title>Horizonte Construtora</title>
 	<link>https://horizonteconstrutora.newbie4.com</link>
 	<description>Uma construtora feita para você</description>
+<<<<<<< HEAD
 	<pubDate>Fri, 01 May 2026 01:08:34 +0000</pubDate>
+=======
+	<pubDate>Fri, 01 May 2026 01:13:47 +0000</pubDate>
+>>>>>>> 2ea5872 (2.1.0 - Inserindo responsividade da tela de sobre para celulares)
 	<language>pt-BR</language>
 	<wp:wxr_version>1.2</wp:wxr_version>
 	<wp:base_site_url>https://horizonteconstrutora.newbie4.com</wp:base_site_url>
