@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 public record ContractRequest(
         String userCPF,
-        Integer realStateId,
         Integer unitsRealStateId,
         BigDecimal downPayment,
         Integer installmentsTotal,

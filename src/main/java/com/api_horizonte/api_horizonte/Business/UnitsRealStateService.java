@@ -5,8 +5,6 @@ import com.api_horizonte.api_horizonte.Infraestructure.Entities.RealState;
 import com.api_horizonte.api_horizonte.Infraestructure.Entities.UnitsRealState;
 import com.api_horizonte.api_horizonte.Infraestructure.Entities.UnitsRealStateStatus;
 import com.api_horizonte.api_horizonte.Infraestructure.Repositories.UnitsRealStateRepository;
-import jakarta.persistence.metamodel.IdentifiableType;
-import org.springframework.format.annotation.DurationFormat;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,7 +27,8 @@ public class UnitsRealStateService {
                         UnitsRealState.getFloor(),
                         UnitsRealState.getFootage(),
                         UnitsRealState.getStatus(),
-                        UnitsRealState.getRealState()
+                        UnitsRealState.getRealState(),
+                        UnitsRealState.getPrice()
                 ))
                 .toList();
     }
@@ -39,13 +38,7 @@ public class UnitsRealStateService {
                 () -> new RuntimeException("Id da unidade não encontrado")
         );
 
-        return new UnitsRealStateDTO(
-                unitsRealState.getNumber(),
-                unitsRealState.getFloor(),
-                unitsRealState.getFootage(),
-                unitsRealState.getStatus(),
-                unitsRealState.getRealState()
-        );
+        return toDTO(unitsRealState);
     }
 
     public UnitsRealStateDTO findUnitsRealStateByStatus(UnitsRealStateStatus unitsRealStateStatus){
@@ -53,13 +46,7 @@ public class UnitsRealStateService {
                 () -> new RuntimeException("Status de unidade é inválido")
         );
 
-        return new UnitsRealStateDTO(
-                unitsRealState.getNumber(),
-                unitsRealState.getFloor(),
-                unitsRealState.getFootage(),
-                unitsRealState.getStatus(),
-                unitsRealState.getRealState()
-        );
+        return toDTO(unitsRealState);
     }
 
     public UnitsRealStateDTO findUnitsRealStateByRealState(RealState realState){
@@ -67,13 +54,7 @@ public class UnitsRealStateService {
                 () -> new RuntimeException("Empreendimento não encontrado")
         );
 
-        return new UnitsRealStateDTO(
-                unitsRealState.getNumber(),
-                unitsRealState.getFloor(),
-                unitsRealState.getFootage(),
-                unitsRealState.getStatus(),
-                unitsRealState.getRealState()
-        );
+        return toDTO(unitsRealState);
     }
 
     public UnitsRealStateDTO findUnitsRealStateByFootage(double footage){
@@ -81,13 +62,7 @@ public class UnitsRealStateService {
                 () -> new RuntimeException("Metragem não encontrada")
         );
 
-        return new UnitsRealStateDTO(
-                unitsRealState.getNumber(),
-                unitsRealState.getFloor(),
-                unitsRealState.getFootage(),
-                unitsRealState.getStatus(),
-                unitsRealState.getRealState()
-        );
+        return toDTO(unitsRealState);
     }
 
     public UnitsRealStateDTO findUnitsRealStateByFloor(int floor){
@@ -95,13 +70,7 @@ public class UnitsRealStateService {
                 () -> new RuntimeException("Andar não encontrada")
         );
 
-        return new UnitsRealStateDTO(
-                unitsRealState.getNumber(),
-                unitsRealState.getFloor(),
-                unitsRealState.getFootage(),
-                unitsRealState.getStatus(),
-                unitsRealState.getRealState()
-        );
+        return toDTO(unitsRealState);
     }
 
     public UnitsRealStateDTO createUnitsRealState(UnitsRealStateDTO unitsRealStateDTO){
@@ -162,12 +131,17 @@ public class UnitsRealStateService {
 
         unitsRealStateRepository.save(unitsRealState);
 
+        return toDTO(unitsRealState);
+    }
+
+    private UnitsRealStateDTO toDTO(UnitsRealState unitsRealState) {
         return new UnitsRealStateDTO(
-                unitsRealState.getNumber(),
-                unitsRealState.getFloor(),
-                unitsRealState.getFootage(),
-                unitsRealState.getStatus(),
-                unitsRealState.getRealState()
+            unitsRealState.getNumber(),
+            unitsRealState.getFloor(),
+            unitsRealState.getFootage(),
+            unitsRealState.getStatus(),
+            unitsRealState.getRealState(),
+            unitsRealState.getPrice()
         );
     }
 }

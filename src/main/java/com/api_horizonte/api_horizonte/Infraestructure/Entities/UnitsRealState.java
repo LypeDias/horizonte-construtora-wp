@@ -3,6 +3,7 @@ package com.api_horizonte.api_horizonte.Infraestructure.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
@@ -34,6 +35,9 @@ public class UnitsRealState {
     @ManyToOne
     @JoinColumn(name = "realStateId", nullable = false)
     private RealState realState;
+
+    @Column(name="price", nullable = false)
+    private BigDecimal price;
 
     @Column(name = "createdAt", nullable = false)
     private LocalDateTime createdAt;

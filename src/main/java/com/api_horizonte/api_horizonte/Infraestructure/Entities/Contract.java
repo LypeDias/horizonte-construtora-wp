@@ -38,7 +38,7 @@ public class Contract {
     @JoinColumn(name = "realStateId", nullable = false)
     private RealState realState;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "unitsRealStateId", nullable = false)
     private UnitsRealState unitsRealState;
 
@@ -50,7 +50,7 @@ public class Contract {
 
     // campos adicionados na Contract:
 
-    @Column(name = "downPayment")
+    @Column(name = "downPayment", nullable = false)
     private BigDecimal downPayment; // Valor de entrada
 
     @Column(name = "installmentsTotal", nullable = false)
