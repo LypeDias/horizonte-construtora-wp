@@ -88,7 +88,7 @@ public class ContractService {
                 .installmentValue(installmentValue)
                 .interestRate(request.interestRate())
                 .statusContract(ContractStatus.ASSINATURA_PENDENTE)
-                .userCPF(user)
+                .user(user)
                 .realState(unit.getRealState())
                 .unitsRealState(unit)
                 .createdAt(LocalDateTime.now())
@@ -160,8 +160,8 @@ public class ContractService {
                 contract.getInterestRate(),
                 contract.getStatusContract(),
                 // User
-                contract.getUserCPF().getName(),
-                contract.getUserCPF().getCpf(),
+                contract.getUser().getName(),
+                contract.getUser().getCpf(),
                 // RealState
                 contract.getRealState().getName(),
                 // UnitsRealState

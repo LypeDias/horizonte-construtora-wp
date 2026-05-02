@@ -32,7 +32,7 @@ public class Contract {
 
     @ManyToOne
     @JoinColumn(name = "userCPF", nullable = false)
-    private User userCPF;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "realStateId", nullable = false)
