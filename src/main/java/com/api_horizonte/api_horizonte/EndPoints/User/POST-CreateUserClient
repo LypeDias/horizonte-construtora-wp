@@ -1,0 +1,9 @@
+URL: localhost:8080/users/client
+
+Parâmetros:
+{
+  "cpf": "11111111111",
+  "name": "Client",
+  "email": "client@horizonte.com",
+  "password": "client"
+}

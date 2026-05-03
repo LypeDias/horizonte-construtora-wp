@@ -1,0 +1,9 @@
+URL: localhost:8080/users/admin
+
+Parâmetros:
+{
+  "cpf": "22222222222",
+  "name": "admin",
+  "email": "admin@horizonte.com.br",
+  "password": "admin"
+}
