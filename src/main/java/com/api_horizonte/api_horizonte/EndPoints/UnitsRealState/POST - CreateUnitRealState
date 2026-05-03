@@ -1,0 +1,11 @@
+URL: localhost:8080/units
+
+Parâmetros:
+{
+  "number": 102,
+  "floor": 1,
+  "footage": 75.50,
+  "status": "DISPONIVEL",
+  "realStateId": 1,
+  "price": 450000.00
+}
