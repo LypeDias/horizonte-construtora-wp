@@ -4,6 +4,7 @@ import com.api_horizonte.api_horizonte.Business.UserService;
 import com.api_horizonte.api_horizonte.Infraestructure.DTO.UserRequest;
 import com.api_horizonte.api_horizonte.Infraestructure.DTO.UserRequestRefresh;
 import com.api_horizonte.api_horizonte.Infraestructure.DTO.UserResponseDefault;
+import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -61,6 +62,13 @@ public class UserController {
     public ResponseEntity<List<UserResponseDefault>> findAll() {
         List<UserResponseDefault> users = userService.findAllUsers();
         return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponseDefault> findMe(Authentication authentication) {
+        String email = authentication.getName(); // pega o email do token
+        UserResponseDefault response = userService.findUserByEmail(email);
+        return ResponseEntity.ok(response);
     }
 
     // 🔹 Deletar usuário

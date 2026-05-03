@@ -13,4 +13,6 @@ public interface ContractRepository extends JpaRepository<Contract, Integer> {
     List<Contract> findContractByUser(User user);
 
     List<Contract> findContractByRealState(RealState realState);
+
+    List<Contract> findContractByUser_Cpf(String cpf);
 }

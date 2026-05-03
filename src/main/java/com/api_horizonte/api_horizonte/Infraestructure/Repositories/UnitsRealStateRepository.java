@@ -5,6 +5,7 @@ import com.api_horizonte.api_horizonte.Infraestructure.Entities.UnitsRealState;
 import com.api_horizonte.api_horizonte.Infraestructure.Entities.UnitsRealStateStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UnitsRealStateRepository extends JpaRepository<UnitsRealState, Integer> {
@@ -18,6 +19,8 @@ public interface UnitsRealStateRepository extends JpaRepository<UnitsRealState, 
     Optional<UnitsRealState> findUnitsRealStateByFootage(double footage);
 
     Optional<UnitsRealState> findUnitsRealStateByFloor(int floor);
+
+    List<UnitsRealState> findByRealStateNameContainingIgnoreCase(String name);
 
     boolean existsByRealStateAndFloorAndNumber(
             RealState realState,

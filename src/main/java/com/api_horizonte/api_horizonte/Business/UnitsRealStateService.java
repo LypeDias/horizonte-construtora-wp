@@ -1,9 +1,11 @@
 package com.api_horizonte.api_horizonte.Business;
 
 import com.api_horizonte.api_horizonte.Infraestructure.DTO.UnitsRealStateDTO;
+import com.api_horizonte.api_horizonte.Infraestructure.DTO.UnitsRealStateResponse;
 import com.api_horizonte.api_horizonte.Infraestructure.Entities.RealState;
 import com.api_horizonte.api_horizonte.Infraestructure.Entities.UnitsRealState;
 import com.api_horizonte.api_horizonte.Infraestructure.Entities.UnitsRealStateStatus;
+import com.api_horizonte.api_horizonte.Infraestructure.Repositories.RealStateRepository;
 import com.api_horizonte.api_horizonte.Infraestructure.Repositories.UnitsRealStateRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,26 +16,28 @@ import java.util.List;
 public class UnitsRealStateService {
 
     final UnitsRealStateRepository unitsRealStateRepository;
+    final RealStateRepository realStateRepository;
 
-    public UnitsRealStateService(UnitsRealStateRepository unitsRealStateRepository) {
+    public UnitsRealStateService(UnitsRealStateRepository unitsRealStateRepository, RealStateRepository realStateRepository) {
         this.unitsRealStateRepository = unitsRealStateRepository;
+        this.realStateRepository = realStateRepository;
     }
 
-    public List<UnitsRealStateDTO> findAllUnitsRealState(){
+    public List<UnitsRealStateResponse> findAllUnitsRealState(){
         return unitsRealStateRepository.findAll()
                 .stream()
-                .map(UnitsRealState -> new UnitsRealStateDTO(
+                .map(UnitsRealState -> new UnitsRealStateResponse(
                         UnitsRealState.getNumber(),
                         UnitsRealState.getFloor(),
                         UnitsRealState.getFootage(),
                         UnitsRealState.getStatus(),
-                        UnitsRealState.getRealState(),
+                        UnitsRealState.getRealState().getName(),
                         UnitsRealState.getPrice()
                 ))
                 .toList();
     }
 
-    public UnitsRealStateDTO findUnitsRealStateById(int id){
+    public UnitsRealStateResponse findUnitsRealStateById(int id){
         UnitsRealState unitsRealState = unitsRealStateRepository.findUnitsRealStateById(id).orElseThrow(
                 () -> new RuntimeException("Id da unidade não encontrado")
         );
@@ -41,7 +45,7 @@ public class UnitsRealStateService {
         return toDTO(unitsRealState);
     }
 
-    public UnitsRealStateDTO findUnitsRealStateByStatus(UnitsRealStateStatus unitsRealStateStatus){
+    public UnitsRealStateResponse findUnitsRealStateByStatus(UnitsRealStateStatus unitsRealStateStatus){
         UnitsRealState unitsRealState = unitsRealStateRepository.findUnitsRealStateByStatus(unitsRealStateStatus).orElseThrow(
                 () -> new RuntimeException("Status de unidade é inválido")
         );
@@ -49,15 +53,14 @@ public class UnitsRealStateService {
         return toDTO(unitsRealState);
     }
 
-    public UnitsRealStateDTO findUnitsRealStateByRealState(RealState realState){
-        UnitsRealState unitsRealState = unitsRealStateRepository.findUnitsRealStateByRealState(realState).orElseThrow(
-                () -> new RuntimeException("Empreendimento não encontrado")
-        );
-
-        return toDTO(unitsRealState);
+    public List<UnitsRealStateResponse> findByRealStateName(String name) {
+        return unitsRealStateRepository.findByRealStateNameContainingIgnoreCase(name)
+                .stream()
+                .map(this::toDTO)
+                .toList();
     }
 
-    public UnitsRealStateDTO findUnitsRealStateByFootage(double footage){
+    public UnitsRealStateResponse findUnitsRealStateByFootage(double footage){
         UnitsRealState unitsRealState = unitsRealStateRepository.findUnitsRealStateByFootage(footage).orElseThrow(
                 () -> new RuntimeException("Metragem não encontrada")
         );
@@ -65,7 +68,7 @@ public class UnitsRealStateService {
         return toDTO(unitsRealState);
     }
 
-    public UnitsRealStateDTO findUnitsRealStateByFloor(int floor){
+    public UnitsRealStateResponse findUnitsRealStateByFloor(int floor){
         UnitsRealState unitsRealState = unitsRealStateRepository.findUnitsRealStateByFloor(floor).orElseThrow(
                 () -> new RuntimeException("Andar não encontrada")
         );
@@ -74,8 +77,12 @@ public class UnitsRealStateService {
     }
 
     public UnitsRealStateDTO createUnitsRealState(UnitsRealStateDTO unitsRealStateDTO){
+        RealState realState = realStateRepository.findRealStateById(unitsRealStateDTO.realStateId()).orElseThrow(
+                () -> new RuntimeException("Empreendimento não existe")
+        );
+
         boolean exists = unitsRealStateRepository.existsByRealStateAndFloorAndNumber(
-                unitsRealStateDTO.realState(),
+                realState,
                 unitsRealStateDTO.floor(),
                 unitsRealStateDTO.number()
         );
@@ -89,7 +96,8 @@ public class UnitsRealStateService {
                 .floor(unitsRealStateDTO.floor())
                 .footage(unitsRealStateDTO.footage())
                 .status(unitsRealStateDTO.status())
-                .realState(unitsRealStateDTO.realState())
+                .realState(realState)
+                .price(unitsRealStateDTO.price())
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -98,32 +106,50 @@ public class UnitsRealStateService {
         return unitsRealStateDTO;
     }
 
-    public UnitsRealStateDTO updateUnitsRealStateById (int id, UnitsRealStateDTO dtoRefresh){
-        UnitsRealState unitsRealState = unitsRealStateRepository.findUnitsRealStateById(id).orElseThrow(
-                () -> new RuntimeException("Unidade não encontrada")
-        );
+    public UnitsRealStateResponse updateUnitsRealStateById(int id, UnitsRealStateDTO dtoRefresh) {
+
+        UnitsRealState unitsRealState = unitsRealStateRepository.findUnitsRealStateById(id)
+                .orElseThrow(() -> new RuntimeException("Unidade não encontrada"));
+
+        // 🔥 Só busca se vier ID
+        RealState realState = unitsRealState.getRealState();
+
+        if (dtoRefresh.realStateId() != null) {
+            realState = realStateRepository.findRealStateById(dtoRefresh.realStateId())
+                    .orElseThrow(() -> new RuntimeException("Empreendimento não existe"));
+        }
 
         boolean exists = unitsRealStateRepository.existsByRealStateAndFloorAndNumberAndIdNot(
-                dtoRefresh.realState(),
-                dtoRefresh.floor(),
-                dtoRefresh.number(),
+                realState,
+                dtoRefresh.floor() != null ? dtoRefresh.floor() : unitsRealState.getFloor(),
+                dtoRefresh.number() != null ? dtoRefresh.number() : unitsRealState.getNumber(),
                 id
         );
 
-        if(exists){
+        if (exists) {
             throw new RuntimeException("Não foi possível atualizar porque já existe outra unidade com essas informações");
         }
 
-        unitsRealState.setFloor(dtoRefresh.floor() != null ? dtoRefresh.floor() : unitsRealState.getFloor());
-        unitsRealState.setNumber(dtoRefresh.number() != null ? dtoRefresh.number() : unitsRealState.getNumber());
-        unitsRealState.setRealState(dtoRefresh.realState() != null ? dtoRefresh.realState() : unitsRealState.getRealState());
-        unitsRealState.setFootage(dtoRefresh.footage() != null ? dtoRefresh.footage() : unitsRealState.getFootage());
+        // 🔹 Atualizações
+        if (dtoRefresh.floor() != null)
+            unitsRealState.setFloor(dtoRefresh.floor());
 
-        if(dtoRefresh.status() != null) {
-            if(unitsRealState.getStatus() == UnitsRealStateStatus.VENDIDO){
+        if (dtoRefresh.number() != null)
+            unitsRealState.setNumber(dtoRefresh.number());
+
+        if (dtoRefresh.footage() != null)
+            unitsRealState.setFootage(dtoRefresh.footage());
+
+        if (dtoRefresh.price() != null)
+            unitsRealState.setPrice(dtoRefresh.price());
+
+        if (dtoRefresh.realStateId() != null)
+            unitsRealState.setRealState(realState);
+
+        if (dtoRefresh.status() != null) {
+            if (unitsRealState.getStatus() == UnitsRealStateStatus.VENDIDO) {
                 throw new RuntimeException("Não é possível alterar uma unidade vendida");
             }
-
             unitsRealState.setStatus(dtoRefresh.status());
         }
 
@@ -134,13 +160,13 @@ public class UnitsRealStateService {
         return toDTO(unitsRealState);
     }
 
-    private UnitsRealStateDTO toDTO(UnitsRealState unitsRealState) {
-        return new UnitsRealStateDTO(
+    private UnitsRealStateResponse toDTO(UnitsRealState unitsRealState) {
+        return new UnitsRealStateResponse(
             unitsRealState.getNumber(),
             unitsRealState.getFloor(),
             unitsRealState.getFootage(),
             unitsRealState.getStatus(),
-            unitsRealState.getRealState(),
+            unitsRealState.getRealState().getName(),
             unitsRealState.getPrice()
         );
     }

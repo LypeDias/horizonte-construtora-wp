@@ -21,7 +21,7 @@ import java.util.List;
 public class ContractService {
 
     private final ContractRepository contractRepository;
-    private final FinancialRepository financialRepository;
+    private final FinanceRepository financialRepository;
     private final UserRepository userRepository;
     private final RealStateRepository realStateRepository;
     private final UnitsRealStateRepository unitsRealStateRepository;
@@ -52,6 +52,32 @@ public class ContractService {
         }
 
         return contract.stream().map(this::toResponse).toList();
+    }
+
+    public List<ContractResponse> findContractByEmail(String email) {
+        User user = userRepository.findUserByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        return contractRepository.findContractByUser_Cpf(user.getCpf())
+                .stream()
+                .map(contract -> new ContractResponse(
+                        contract.getId(),
+                        contract.getContractNumber(),
+                        contract.getDatePurchase(),
+                        contract.getPurchaseValue(),
+                        contract.getDownPayment(),
+                        contract.getInstallmentValue(),
+                        contract.getInstallmentsTotal(),
+                        contract.getInterestRate(),
+                        contract.getStatusContract(),
+                        contract.getUser().getName(),
+                        contract.getUser().getCpf(),
+                        contract.getRealState().getName(),
+                        contract.getUnitsRealState().getId(),
+                        contract.getCreatedAt(),
+                        contract.getUpdatedAt()
+                ))
+                .toList();
     }
 
     @Transactional
