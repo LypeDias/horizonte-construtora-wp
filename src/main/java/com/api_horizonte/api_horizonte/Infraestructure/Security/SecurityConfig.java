@@ -48,6 +48,7 @@ public class SecurityConfig {
                         // ── Contracts ─────────────────────────────────────────────────
                         .requestMatchers(HttpMethod.POST,  "/contracts").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET,   "/contracts/realstate/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,   "/contracts/realstate/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/contracts/{id}").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.GET,   "/contracts/user/{cpf}").hasRole("ADMIN")  // ← virou só ADMIN
                         .requestMatchers(HttpMethod.GET,   "/contracts/me").hasAnyRole("ADMIN", "CLIENT") // ← novo
@@ -61,9 +62,10 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,   "/financial/me").hasAnyRole("ADMIN", "CLIENT")
 
                         // ── Real States ───────────────────────────────────────────────
+                        .requestMatchers(HttpMethod.GET,  "/api/real-states/all").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET,  "/api/real-states/**").hasAnyRole("ADMIN", "CLIENT")
                         .requestMatchers(HttpMethod.POST, "/api/real-states").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT,  "/api/real-states/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET,  "/api/real-states/**").hasAnyRole("ADMIN", "CLIENT")
 
                         // ── Units ─────────────────────────────────────────────────
                         .requestMatchers(HttpMethod.POST, "/units").hasRole("ADMIN")

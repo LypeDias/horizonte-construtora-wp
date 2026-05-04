@@ -19,9 +19,13 @@ public class RealStateService {
         this.realStateRepository = realStateRepository;
     }
 
-    // -------------------------------------------------------------------------
-    // Métodos de busca
-    // -------------------------------------------------------------------------
+    public List<RealStateDTO> findAllRealStates(){
+        List<RealState> realStates = realStateRepository.findAll();
+        if(realStates.isEmpty()){
+            throw new RuntimeException("Nenhum empreendimento encontrado");
+        }
+        return realStates.stream().map(this::toDTO).toList();
+    }
 
     public RealStateDTO findRealStateById(int id) {
         RealState realState = realStateRepository.findRealStateById(id)

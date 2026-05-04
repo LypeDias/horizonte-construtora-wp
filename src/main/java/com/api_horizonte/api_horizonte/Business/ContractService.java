@@ -26,6 +26,14 @@ public class ContractService {
     private final RealStateRepository realStateRepository;
     private final UnitsRealStateRepository unitsRealStateRepository;
 
+    public List<ContractResponse> findAllContracts(){
+        List<Contract> contract = contractRepository.findAll();
+        if(contract.isEmpty()){
+            throw new RuntimeException("Nenhum contrato encontrado");
+        }
+        return contract.stream().map(this::toResponse).toList();
+    }
+
     public List<ContractResponse> findContractByUserCPF(String cpf){
         User user = userRepository.findUserByCpf(cpf).orElseThrow(
                 () -> new RuntimeException("Usuario não encontrado")

@@ -16,6 +16,8 @@ public interface RealStateRepository extends JpaRepository<RealState, Integer> {
 
     List<RealState> findRealStateByCity(String city);
 
+    List<RealState> findAll();
+
     List<RealState> findRealStateByState(String state);
 
     List<RealState> findRealStateByRealStateStatus(RealStateStatus realStateStatus);

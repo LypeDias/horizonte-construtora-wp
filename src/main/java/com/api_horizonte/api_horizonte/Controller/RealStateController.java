@@ -24,6 +24,11 @@ public class RealStateController {
     // GET
     // -------------------------------------------------------------------------
 
+    @GetMapping("/all")
+    public ResponseEntity<List<RealStateDTO>> findAllRealStates(){
+        return ResponseEntity.ok(realStateService.findAllRealStates());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<RealStateDTO> findById(@PathVariable int id) {
         return ResponseEntity.ok(realStateService.findRealStateById(id));

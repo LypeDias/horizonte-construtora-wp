@@ -24,6 +24,7 @@ public class TokenService {
             String token = JWT.create()
                     .withIssuer("horizonte_contrutora")
                     .withSubject(user.getUsername())
+                    .withClaim("role", user.getAuthorities().iterator().next().getAuthority())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
             return token;

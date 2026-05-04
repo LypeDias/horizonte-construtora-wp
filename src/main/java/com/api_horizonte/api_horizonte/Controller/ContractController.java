@@ -5,6 +5,7 @@ import com.api_horizonte.api_horizonte.Infraestructure.DTO.ContractRequest;
 import com.api_horizonte.api_horizonte.Infraestructure.DTO.ContractResponse;
 import com.api_horizonte.api_horizonte.Infraestructure.DTO.ContractUpdateRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,12 @@ public class ContractController {
     public ResponseEntity<ContractResponse> createContract(@RequestBody ContractRequest request) {
         ContractResponse response = contractService.createContract(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ContractResponse>> findAllContracts(){
+        List<ContractResponse> response = contractService.findAllContracts();
+        return ResponseEntity.ok(response);
     }
 
     // GET /contracts/user/{cpf}
