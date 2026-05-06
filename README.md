@@ -1,155 +1,158 @@
-# Horizonte Construtora — Plataforma Web
-
-Projeto desenvolvido utilizando WordPress com foco na apresentação institucional de uma construtora, incluindo páginas informativas, sistema de exibição de empreendimentos, formulário de contato e base para futura expansão com autenticação de usuários e API própria.
+# 🏗️ Horizonte Construtora — Plataforma Web
 
 ---
 
-## Funcionalidades Implementadas
-
-### Estrutura Global
-- Header com logo e menu interativo (Home, Empreendimentos, Sobre, Contato)
-- Botão de acesso rápido via WhatsApp (redirecionamento para atendimento)
-- Botão de Login (redireciona para página de autenticação)
-- Footer estruturado com:
-  - Logo e frase institucional
-  - Links rápidos para navegação principal
-  - Seção de contato (telefone, e-mail e localização)
-  - Links de filtro para empreendimentos (em desenvolvimento)
-  - Ícones de redes sociais
+## 🌐 Acesse o projeto
+- Site: http://www.horizonteconstrutora.newbie4.com.br  
+- API: http://18.191.214.57:8080  
 
 ---
 
-## Páginas do Projeto
+## 📌 Sobre o Projeto
 
-### Home (90% concluída)
-- Banner principal
-- Seção de empreendimentos em destaque (cards dinâmicos vinculados aos posts)
-- Botão para listagem geral de empreendimentos
-- Seção de métricas/resultados da empresa
-- Botão "Conheça-nos" (redireciona para Sobre)
-- Seção de contato com botão direto para WhatsApp
-- Formulário de contato integrado com envio de mensagens
-- Integração com Google Maps
-- Em desenvolvimento: barra de filtro de empreendimentos
+A **Horizonte Construtora** é uma plataforma web desenvolvida com foco na apresentação institucional de empreendimentos imobiliários, integrada a uma **API própria em Java** para gerenciamento de dados e autenticação de usuários.
+
+Arquitetura:
+- Front-end: WordPress
+- Back-end: Spring Boot (Java)
+- Banco: PostgreSQL
+- Cloud: AWS EC2
 
 ---
 
-### Empreendimentos (em desenvolvimento)
-- Banner principal implementado
-- Estrutura base criada
-- Desenvolvimento do sistema de listagem e filtros em andamento
+## ⚙️ Tecnologias
 
----
+### Backend
+- Java
+- Spring Boot
+- Spring Security
+- JWT
+- JPA / Hibernate
+- BCrypt
 
-### Sobre (100% concluída)
-- Banner principal com identidade visual e frase de impacto
-- História da empresa
-- Missão, Visão e Valores
-- Seção de valores institucionais
-- Resultados e números da empresa
-- Formulário de contato
-- Integração com Google Maps
-- Animações aplicadas em elementos textuais
+### Frontend
+- WordPress (Hello Elementor)
 
----
-
-### Contato (100% concluída)
-- Banner principal com identidade visual
-- Formulário de contato funcional
-- Seção com incentivo ao contato
-- Ícones de redes sociais
-- Integração com Google Maps
-
----
-
-### Login (em desenvolvimento)
-- Estrutura inicial da interface criada
-- Em análise:
-  - Implementação via plugin ou API própria
-- Futuro sistema de autenticação com diferenciação entre:
-  - Cliente
-  - Administrador
-
----
-
-## Conteúdo e Gestão de Empreendimentos
-
-- Criação de posts para todos os empreendimentos
-- Desenvolvimento do post modelo baseado no empreendimento de Florianópolis
-- Objetivo: padronizar estrutura para facilitar replicação dos demais imóveis
-
----
-
-## Plugins Utilizados
-
+### Plugins
 - Elementor
 - MetForm
-- Search & Filter
-- Ultimate Addons for Elementor (UAE)
-- Custom Post Type UI
-- Click to Chat
-- WP Mail SMTP
+- UAE
 - Yoast SEO
+- WP Mail SMTP
+- Search & Filter
+- Click to Chat
 
 ---
 
-## Observações sobre SEO
+## 🔐 Autenticação
 
-O plugin Yoast SEO foi utilizado para otimização completa do site, permitindo:
+POST /auth/login
 
-- Otimização de títulos e meta descriptions
-- Análise de palavras-chave e legibilidade
-- Configuração de Search Appearance das páginas principais
-- Melhoria de indexação em mecanismos de busca
-- Aplicação de boas práticas de SEO on-page
+```json
+{
+  "email": "admin@horizonte.com.br",
+  "password": "admin"
+}
+```
 
----
-
-## Tecnologias Utilizadas
-
-- WordPress
-- Elementor
-- PHP
-- HTML, CSS e JavaScript
-- Integrações com Google Maps e WhatsApp
+Resposta:
+```json
+{
+  "token": "SEU_TOKEN"
+}
+```
 
 ---
 
-## Arquitetura do Projeto
+## 👤 Usuários de Teste
 
-O repositório contém a exportação do WordPress:
+Admin:
+- admin@horizonte.com.br
+- admin
 
-- export.xml
-
----
-
-## API (Em Desenvolvimento)
-
-O projeto está evoluindo para uma arquitetura híbrida com API própria, com objetivo de:
-
-- Gerenciar autenticação de usuários (Login/Logout)
-- Diferenciar perfis de acesso (Cliente e Administrador)
-- Alimentar dados dinâmicos das áreas internas do sistema
-- Suportar futuras funcionalidades de painel administrativo e gestão
+Cliente:
+- cliente@horizonte.com.br
+- cliente
+- CPF: 11122233344
 
 ---
 
-## Como Executar o Projeto
+## 🔗 Endpoints
 
-1. Instalar WordPress localmente ou em servidor
-2. Instalar o tema Hello Elementor
-3. Instalar os plugins listados acima
-4. Acessar o painel administrativo
-5. Importar o arquivo export.xml via Ferramentas → Importar
+### Auth
+- POST /auth/login
+
+### Users
+- POST /users/client
+- POST /users/admin
+- GET /users
+- GET /users/{id}
+- GET /users/me
+- PUT /users/{id}
+
+### Real States
+- POST /api/real-states
+- GET /api/real-states/all
+- GET /api/real-states/name/{name}
+- PUT /api/real-states/{id}
+
+### Units
+- POST /units
+- GET /units
+- GET /units/status/{status}
+- GET /units/realstate
+- PUT /units/{id}
+
+### Contracts
+- POST /contract
+- GET /contracts/all
+- GET /contracts/user/{cpf}
+- GET /contracts/realstate/{name}
+- GET /contracts/me
+- PATCH /contracts/{id}
 
 ---
 
-## Status do Projeto
+## 🚀 Deploy
 
-Em desenvolvimento ativo
+AWS EC2:
+- IP: 18.191.214.57
+- Porta: 8080
+- PostgreSQL local
 
 ---
 
-## Autor
+## 🧪 Testes
 
-Projeto desenvolvido como parte de estudos em desenvolvimento web com WordPress, com foco em construção de soluções reais para o setor imobiliário.
+Postman
+
+<img width="1743" height="604" alt="image" src="https://github.com/user-attachments/assets/3aac8872-542c-4841-b2b3-e96e3bb6566a" />
+<img width="723" height="286" alt="image" src="https://github.com/user-attachments/assets/975ab500-300e-472a-a824-2c85f8851c14" />
+<img width="814" height="374" alt="image" src="https://github.com/user-attachments/assets/c7781036-95b4-40b0-a913-64322b6a085f" />
+
+
+---
+
+## 📸 Imagens
+
+<img width="2553" height="880" alt="image" src="https://github.com/user-attachments/assets/b8b28e57-837d-4dac-afe7-18bead0c36cf" />
+<img width="2543" height="877" alt="image" src="https://github.com/user-attachments/assets/7e974b5e-82a4-4a25-9f8d-56a2d1aaa3eb" />
+<img width="2542" height="873" alt="image" src="https://github.com/user-attachments/assets/bbedaf11-ac5b-458b-aac7-01aae18139c1" />
+
+---
+
+## 📊 Trello
+
+https://trello.com/invite/b/69a8ca7cfaeb8ab4baad90fa/ATTIc030a12f9ac3ac0b884315480b4528b3B165E8F5/newbie4-desenvolvimento-web
+
+---
+
+## 🚧 Status
+
+Em desenvolvimento
+
+---
+
+## 👨‍💻 Autor
+
+Projeto para fins de estudo e aplicação real.
