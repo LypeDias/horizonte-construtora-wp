@@ -137,6 +137,7 @@ public class RealStateService {
 
     private RealStateDTO toDTO(RealState realState) {
         return new RealStateDTO(
+                realState.getId(),
                 realState.getName(),
                 realState.getDescription(),
                 realState.getState(),

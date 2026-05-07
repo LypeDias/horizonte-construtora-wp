@@ -6,6 +6,7 @@ import com.api_horizonte.api_horizonte.Infraestructure.Entities.RealStateStatus;
 import java.time.LocalDate;
 
 public record RealStateDTO(
+        Integer id,
         String name,
         String description,
         String state,

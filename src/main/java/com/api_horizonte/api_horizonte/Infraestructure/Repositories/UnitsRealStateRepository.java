@@ -12,9 +12,9 @@ public interface UnitsRealStateRepository extends JpaRepository<UnitsRealState, 
 
     Optional<UnitsRealState> findUnitsRealStateById(int id);
 
-    Optional<UnitsRealState> findUnitsRealStateByStatus(UnitsRealStateStatus status);
+    List<UnitsRealState> findUnitsRealStateByStatus(UnitsRealStateStatus status);
 
-    Optional<UnitsRealState> findUnitsRealStateByRealState(RealState realState);
+    List<UnitsRealState> findUnitsRealStateByRealState_id(int id);
 
     Optional<UnitsRealState> findUnitsRealStateByFootage(double footage);
 

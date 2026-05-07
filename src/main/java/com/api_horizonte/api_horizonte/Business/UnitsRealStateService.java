@@ -27,6 +27,7 @@ public class UnitsRealStateService {
         return unitsRealStateRepository.findAll()
                 .stream()
                 .map(UnitsRealState -> new UnitsRealStateResponse(
+                        UnitsRealState.getId(),
                         UnitsRealState.getNumber(),
                         UnitsRealState.getFloor(),
                         UnitsRealState.getFootage(),
@@ -45,12 +46,19 @@ public class UnitsRealStateService {
         return toDTO(unitsRealState);
     }
 
-    public UnitsRealStateResponse findUnitsRealStateByStatus(UnitsRealStateStatus unitsRealStateStatus){
-        UnitsRealState unitsRealState = unitsRealStateRepository.findUnitsRealStateByStatus(unitsRealStateStatus).orElseThrow(
-                () -> new RuntimeException("Status de unidade é inválido")
-        );
+    public List<UnitsRealStateResponse> findByRealStateId(int realStateId) {
+        return unitsRealStateRepository
+                .findUnitsRealStateByRealState_id(realStateId)
+                .stream()
+                .map(this::toDTO)
+                .toList();
+    }
 
-        return toDTO(unitsRealState);
+    public List<UnitsRealStateResponse> findUnitsRealStateByStatus(UnitsRealStateStatus unitsRealStateStatus){
+        return unitsRealStateRepository.findUnitsRealStateByStatus(unitsRealStateStatus)
+                .stream()
+                .map(this::toDTO)
+                .toList();
     }
 
     public List<UnitsRealStateResponse> findByRealStateName(String name) {
@@ -162,6 +170,7 @@ public class UnitsRealStateService {
 
     private UnitsRealStateResponse toDTO(UnitsRealState unitsRealState) {
         return new UnitsRealStateResponse(
+            unitsRealState.getId(),
             unitsRealState.getNumber(),
             unitsRealState.getFloor(),
             unitsRealState.getFootage(),

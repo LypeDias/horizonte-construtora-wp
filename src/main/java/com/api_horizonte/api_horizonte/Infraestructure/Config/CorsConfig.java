@@ -13,10 +13,11 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedOrigins("https://horizonteconstrutora.com.br")
-                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE")
-                        .allowedHeaders("*");
+                registry.addMapping("/**") // Libera todos os endpoints da API
+                        .allowedOrigins("*") // PERMITE QUALQUER ORIGEM (Crucial para o teste)
+                        .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS") // Adicionado OPTIONS
+                        .allowedHeaders("*")
+                        .allowCredentials(false); // Quando usar "*", o credentials deve ser false
             }
         };
     }

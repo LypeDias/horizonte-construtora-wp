@@ -36,9 +36,9 @@ public class UnitsRealStateController {
 
     // GET /units/status/{status} → busca unidade por status (DISPONIVEL, RESERVADO, VENDIDO)
     @GetMapping("/status/{status}")
-    public ResponseEntity<UnitsRealStateResponse> findUnitsRealStateByStatus(
+    public ResponseEntity<List<UnitsRealStateResponse>> findUnitsRealStateByStatus(
             @PathVariable UnitsRealStateStatus status) {
-        UnitsRealStateResponse unit = unitsRealStateService.findUnitsRealStateByStatus(status);
+        List<UnitsRealStateResponse> unit = unitsRealStateService.findUnitsRealStateByStatus(status);
         return ResponseEntity.ok(unit);
     }
 
@@ -62,6 +62,13 @@ public class UnitsRealStateController {
             @RequestParam String name) {
 
         List<UnitsRealStateResponse> units = unitsRealStateService.findByRealStateName(name);
+        return ResponseEntity.ok(units);
+    }
+
+    @GetMapping("/realstate/{id}")
+    public ResponseEntity<List<UnitsRealStateResponse>> findByRealStateId(
+            @PathVariable int id) {
+        List<UnitsRealStateResponse> units = unitsRealStateService.findByRealStateId(id);
         return ResponseEntity.ok(units);
     }
 

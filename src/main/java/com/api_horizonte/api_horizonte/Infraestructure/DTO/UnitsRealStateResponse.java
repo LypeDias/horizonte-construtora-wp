@@ -5,6 +5,7 @@ import com.api_horizonte.api_horizonte.Infraestructure.Entities.UnitsRealStateSt
 import java.math.BigDecimal;
 
 public record UnitsRealStateResponse(
+        Integer id,
         Integer number,
         Integer floor,
         Double footage,

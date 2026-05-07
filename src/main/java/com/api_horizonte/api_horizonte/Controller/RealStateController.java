@@ -1,4 +1,4 @@
-package com.api_horizonte.api_horizonte.Controllers;
+package com.api_horizonte.api_horizonte.Controller;
 
 import com.api_horizonte.api_horizonte.Business.RealStateService;
 import com.api_horizonte.api_horizonte.Infraestructure.DTO.RealStateDTO;
